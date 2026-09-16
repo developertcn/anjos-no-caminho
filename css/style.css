@@ -437,6 +437,15 @@ section {
   font-weight: 600;
 }
 
+/* ---------- Foto da página Nossa História ---------- */
+.history-photo {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
 /* ---------- CTA história (home) ---------- */
 .history-cta {
   position: relative;

@@ -26,9 +26,9 @@ direto) e procure pelo texto indicado entre aspas.
 
 ## historia.html (Nossa História)
 
-- [ ] Texto sobre como o grupo começou (3 parágrafos marcados como "[Texto de exemplo]")
-- [ ] Linha do tempo: anos e descrições de cada marco (hoje estão como "[Ano de exemplo]")
-- [ ] Foto grande ao lado do texto (ainda é placeholder — pode ser a mesma "fundo_quemsomos" ou outra que você preferir)
+- [x] Texto real sobre como o grupo começou (Rosa Amélia, os 8 casais, o dia 12 de outubro)
+- [x] Linha do tempo com os marcos reais da história
+- [x] Foto da placa "Sejam bem-vindos queridos peregrinos" (anjos_historia)
 
 ## fotos.html (Fotos)
 
