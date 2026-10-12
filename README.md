@@ -10,7 +10,6 @@ Site estático em HTML, CSS e JavaScript puro (sem build, sem dependências):
 - `index.html` — Home
 - `historia.html` — Nossa História
 - `fotos.html` — Galeria de fotos, com filtro por mês e lightbox navegável
-- `eventos.html` — Eventos
 - `oracoes.html` — Orações
 - `contato.html` — Contato, com formulário e chave Pix
 - `css/style.css` — estilos

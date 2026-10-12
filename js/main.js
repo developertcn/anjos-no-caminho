@@ -17,24 +17,86 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Cartões de eventos "Saiba mais"
-  document.querySelectorAll('.event-more').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var detail = btn.closest('.event-body').querySelector('.event-detail');
-      var isOpen = detail.classList.toggle('open');
-      btn.classList.toggle('open', isOpen);
-      btn.querySelector('span').textContent = isOpen ? 'Ver menos' : 'Saiba mais';
-    });
+  // ---------- Fotos por mês (Home: 2 mais recentes; Fotos: todos) ----------
+  var meses = (window.MESES_FOTOS || []).slice().sort(function (a, b) {
+    return (b.ano * 100 + b.mes) - (a.ano * 100 + a.mes);
   });
 
-  // Cartões de oração "Ler oração"
-  document.querySelectorAll('.prayer-toggle').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var full = btn.closest('.prayer-card').querySelector('.prayer-full');
-      var isOpen = full.classList.toggle('open');
-      btn.querySelector('span').textContent = isOpen ? 'Fechar oração' : 'Ler oração';
+  function thumbsHtml(m, classeExtra) {
+    var html = '';
+    for (var i = 1; i <= m.total; i++) {
+      var n = (i < 10 ? '0' : '') + i;
+      var alt = 'Peregrinos no Caminho da Fé - ' + m.nome + ' ' + m.ano;
+      html += '<button type="button" class="' + (classeExtra || '') + ' photo-thumb gallery-photo" data-group="' + m.id +
+        '" data-full="' + m.pasta + '/full/foto-' + n + '.webp" data-alt="' + alt + '">' +
+        '<img src="' + m.pasta + '/thumb/foto-' + n + '.webp" alt="' + alt + '" loading="lazy"></button>';
+    }
+    return html;
+  }
+
+  var homeMomentos = document.getElementById('momentos-home');
+  if (homeMomentos) {
+    homeMomentos.innerHTML = meses.slice(0, 2).map(function (m, idx) {
+      return '<section' + (idx % 2 === 1 ? ' class="section-alt"' : '') + '><div class="container">' +
+        '<div class="section-head"><h2>Momentos de ' + m.nome + ' ' + m.ano + '</h2><div class="underline"></div></div>' +
+        '<div class="photo-grid month-grid">' + thumbsHtml(m) + '</div>' +
+        '<div class="center-btn"><button type="button" class="btn btn-navy" data-gallery="' + m.id + '">Ver mais momentos</button></div>' +
+        '</div></section>';
+    }).join('');
+  }
+
+  var fotosGrid = document.getElementById('fotos-grid');
+  if (fotosGrid) {
+    var bar = document.getElementById('fotos-filtros');
+    if (bar) {
+      bar.innerHTML = '<button type="button" class="filter-btn active" data-filter="todos">Todos</button>' +
+        meses.map(function (m) {
+          return '<button type="button" class="filter-btn" data-filter="' + m.id + '">' + m.nome + ' ' + m.ano + '</button>';
+        }).join('');
+    }
+    fotosGrid.innerHTML = meses.map(function (m) { return thumbsHtml(m, 'photo-item'); }).join('');
+  }
+
+  // ---------- Orações: "Ler oração" abre um modal com o texto completo ----------
+  var prayerButtons = document.querySelectorAll('.prayer-toggle');
+  if (prayerButtons.length) {
+    var prayerModal = document.createElement('div');
+    prayerModal.className = 'prayer-modal';
+    prayerModal.setAttribute('role', 'dialog');
+    prayerModal.setAttribute('aria-modal', 'true');
+    prayerModal.setAttribute('aria-labelledby', 'prayer-modal-title');
+    prayerModal.innerHTML = '<div class="prayer-modal-box">' +
+      '<button type="button" class="prayer-modal-close" aria-label="Fechar">&times;</button>' +
+      '<h3 id="prayer-modal-title"></h3><div class="prayer-modal-text"></div></div>';
+    document.body.appendChild(prayerModal);
+
+    var prayerTitle = prayerModal.querySelector('#prayer-modal-title');
+    var prayerText = prayerModal.querySelector('.prayer-modal-text');
+
+    function closePrayer() {
+      prayerModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    prayerButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var card = btn.closest('.prayer-card');
+        prayerTitle.textContent = card.querySelector('h3').textContent;
+        prayerText.textContent = card.querySelector('.prayer-full').textContent.trim();
+        prayerModal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        prayerModal.querySelector('.prayer-modal-close').focus();
+      });
     });
-  });
+
+    prayerModal.addEventListener('click', function (e) {
+      if (e.target === prayerModal || e.target.closest('.prayer-modal-close')) closePrayer();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && prayerModal.classList.contains('open')) closePrayer();
+    });
+  }
 
   // Filtro da página Fotos
   var filterButtons = document.querySelectorAll('.filter-btn');
@@ -168,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
       var msg = document.querySelector('.form-note-status');
       if (msg) {
-        msg.textContent = 'Formulário pronto no visual. Falta apenas ligar o envio a um e-mail ou serviço (explico como no CONTEUDO-PARA-EDITAR.md).';
+        msg.textContent = 'O envio de mensagens será ativado após a contratação da hospedagem. Por enquanto, fale conosco pelo WhatsApp ou e-mail.';
         msg.style.display = 'block';
       }
     });
