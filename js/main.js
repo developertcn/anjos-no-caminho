@@ -223,16 +223,33 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Formulário de contato (front-end apenas — sem envio real ainda)
+  // Formulário de contato: envia para enviar-contato.php
   var contactForm = document.querySelector('.contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', function (e) {
       e.preventDefault();
-      var msg = document.querySelector('.form-note-status');
-      if (msg) {
-        msg.textContent = 'O envio de mensagens será ativado após a contratação da hospedagem. Por enquanto, fale conosco pelo WhatsApp ou e-mail.';
+      var msg = contactForm.querySelector('.form-note-status');
+      var btn = contactForm.querySelector('button[type="submit"]');
+      function mostrar(texto, ok) {
+        msg.textContent = texto;
+        msg.style.color = ok ? '#1a7f37' : '#b42318';
         msg.style.display = 'block';
       }
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+      fetch(contactForm.getAttribute('action'), { method: 'POST', body: new FormData(contactForm) })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          mostrar(d.mensagem, d.ok);
+          if (d.ok) contactForm.reset();
+        })
+        .catch(function () {
+          mostrar('Não foi possível enviar agora. Fale conosco pelo WhatsApp.', false);
+        })
+        .finally(function () {
+          btn.disabled = false;
+          btn.textContent = 'Enviar mensagem';
+        });
     });
   }
 

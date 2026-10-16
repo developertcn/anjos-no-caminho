@@ -79,7 +79,8 @@
           <h2>Envie uma mensagem</h2>
           <div class="underline"></div>
         </div>
-        <form class="contact-form">
+        <form class="contact-form" action="enviar-contato.php" method="post">
+          <div style="position:absolute;left:-9999px;" aria-hidden="true"><label>Não preencha <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
           <div class="form-group">
             <label for="nome">Nome completo</label>
             <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
@@ -97,8 +98,8 @@
             <textarea id="mensagem" name="mensagem" rows="5" placeholder="Como podemos ajudar?" required></textarea>
           </div>
           <button type="submit" class="btn btn-navy btn-block">Enviar mensagem</button>
-          <p class="form-note form-note-status" style="display:none;color:var(--navy);font-weight:600;"></p>
-          <p class="form-note">Enquanto o envio do formulário não está ativo, fale conosco pelo WhatsApp ou pelo e-mail ao lado.</p>
+          <p class="form-note form-note-status" role="status" style="display:none;font-weight:600;"></p>
+          <p class="form-note">Sua mensagem chega direto para a equipe dos Anjos no Caminho.</p>
         </form>
       </div>
 
