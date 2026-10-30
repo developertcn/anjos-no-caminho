@@ -447,7 +447,7 @@ section {
 }
 
 /* ---------- Apoio à Dita (home) ---------- */
-.dita-section { padding: 0 0 56px; }
+.dita-section { padding: 40px 0 0; }
 
 .dita-card {
   display: flex;
