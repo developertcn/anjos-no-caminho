@@ -446,6 +446,93 @@ section {
   box-shadow: var(--shadow);
 }
 
+/* ---------- Seção de doação (Nossa História) ---------- */
+.donation-section {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.donation-head {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.donation-head h2 {
+  color: var(--white);
+  font-size: 2.2rem;
+  margin-bottom: 14px;
+}
+
+.donation-pill {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy-deep);
+  font-weight: 600;
+  padding: 8px 22px;
+  border-radius: 8px;
+}
+
+.donation-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.donation-text p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.05rem;
+  margin-bottom: 18px;
+}
+
+.donation-text strong {
+  color: var(--gold);
+}
+
+.donation-pix {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-left: 4px solid var(--gold);
+  border-radius: 8px;
+  padding: 14px 20px;
+  margin-top: 6px;
+}
+
+.donation-pix span {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.donation-pix strong {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--gold);
+}
+
+.donation-photos {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+}
+
+.donation-photos img {
+  width: 48%;
+  border: 8px solid var(--white);
+  border-radius: 4px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.donation-photos img:first-child { transform: rotate(-4deg); }
+.donation-photos img:last-child { transform: rotate(3deg); }
+
+@media (max-width: 860px) {
+  .donation-layout { grid-template-columns: 1fr; gap: 32px; }
+  .donation-head h2 { font-size: 1.8rem; }
+}
+
 /* ---------- CTA história (home) ---------- */
 .history-cta {
   position: relative;
